@@ -1,0 +1,31 @@
+<h3>Reply to</h3>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  "<%= @post.post.to_s %>"
+</p>
+
+<%= form_tag posts_reply_path(:parent_post_id => @post.post_id) %>
+<table>
+  <tr>
+    <td>
+     Type your response here:
+    </td>
+    <td>
+     <textarea id="post" name="post"></textarea>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><input type="submit" value=" Submit " /></td>
+  </tr>
+
+</table>
+<br />
+
+<%= link_to 'Back', posts_path %>
+
+

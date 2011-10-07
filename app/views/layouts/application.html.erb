@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Q&A</title>
+  <%= stylesheet_link_tag    "custom" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+    <div class="container">
+      <table width=100% valign="top" border="0">
+
+        <tr>
+          <td>
+      <header>
+           <table width=100% valign="top" border="0">
+          <tr>
+            <td align="left">
+               <%= image_tag("backchannelapp.gif", :alt => "Live Q&A", :class => "round") %>
+            </td>
+            <td valign="top">
+              <table width="100%" cellspacing = "5" cellpadding="5">
+                <tr><td>
+                    <nav class="round">
+               <%= link_to "Home", root_path %></nav>
+                  <% if !session[:user_id].nil? %>
+                  <nav class="round"><%= link_to "Sign out", users_logout_path %></nav>
+                  <% end %>
+              <nav class="round"><%= link_to "Sign in", '/users' %></nav>
+                  <% if !session[:user_id].nil? %>
+              <nav class="round"><%= link_to "My Profile", edit_user_path(session[:user_id]) %></nav><% end %>
+              <nav class="round"><%= link_to "View Posts", '/posts' %></nav>
+
+                    <% if session[:admin].to_s == "Admin" %>
+                        <nav class="round"><%= link_to 'Reports', posts_reports_path %></nav>
+                           <nav class="round"><%= link_to 'Create User', '/users/new'%></nav>
+                         <nav class="round"><%= link_to 'Show All Users', users_showallusers_path %></nav><% end %>
+                  </td>
+                </tr>
+                <tr align="right">
+                  <td>
+                    <%= form_tag :controller => "posts", :action => "search" do%>
+                    <%= text_field_tag("search")  %>
+                    <%= select_tag("searchType", options_for_select([['By User', 1],['By Keyword', 2]], 2)) %>
+                    <input type="submit" value="Search">&nbsp;
+                    <% end %>
+                  </td>
+                </tr>
+               </table>
+            </td>
+          </tr>
+         </table>
+    </header>
+      <tr>
+        <td colspan="2">
+             <section class="round">
+        <%= yield %>
+   </section>
+        </td>
+      </tr>
+
+
+</table>
+        </div>
+</body>
+</html>

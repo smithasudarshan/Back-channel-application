@@ -1,0 +1,30 @@
+<h3>List of all the users</h3>
+
+<% if @users.size == 1 && @users[0].id == session[:user_id]
+%>
+  <p>There are no other users in the system currently.</p>
+<%
+    else
+%>
+<table width="100%" border="1" bordercolor="white" bgcolor="#ECE5B6" cellpadding="8" cellspacing="8">
+<tr>
+  <td>
+    <b>Name</b>
+  </td>
+  <td><b>Options</b></td>
+
+</tr>
+<% @users.each do |user|
+   if user.id != session[:user_id]
+%>
+  <tr>
+    <td><%= user.username %></td>
+    <% if user.id == session[:user_id] or session[:admin].to_s == "Admin"%>
+    <td><%= link_to 'Edit', edit_user_path(user) %> &nbsp;|&nbsp;<%= link_to "Delete", user, :method => :delete, :confirm => "Are you sure?", :title => "Delete #{user.username}"%></td>
+    <% end %>
+
+  </tr>
+ <% end %>
+<% end %>
+</table>
+<% end %>

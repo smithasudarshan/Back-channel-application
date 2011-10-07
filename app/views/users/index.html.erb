@@ -1,0 +1,18 @@
+<h3>Sign In</h3>
+
+<div style="font-family:'Trebuchet MS'; color:#FF0000; font-size:15px;">
+</div>
+<%= form_tag :action=>'authenticate' %>
+
+Username:
+<%= text_field("userform", "username",:size=>"20" ) %>
+<br /><br />
+Password:
+<%= password_field("userform", "password",:size=>"20" ) %>
+<br /><br />
+<input type="submit" value="Sign In" />
+<br /><br />
+
+<br />
+
+Not registered yet?&nbsp;&nbsp;<%= link_to 'Sign Up!', new_user_path %>

@@ -1,0 +1,42 @@
+<h3>Reports</h3>
+
+<table bgcolor="#ECE5B6" border="1" bordercolor="white" width="100%">
+    <font color="white"></font><tr bgcolor="#C8B560">
+      <td align="center">
+        <b>Post</b>
+      </td>
+      <td align="center">
+        <b>Author</b>
+      </td>
+      <td align="center">
+        <b>Number of votes for this post</b>
+      </td>
+    </tr></font>
+    <% @posts.each do |post|
+       if post.id == post.post_id
+    %>
+        <tr>
+          <td>
+            <%= post.post %><div align="right" ><%= link_to 'Go to post', post_path(post.id) %></div>
+          </td>
+          <td align="center">
+            <% @user = User.find(:first, :conditions => "id = '#{post.user_id}'") %>
+            <%= @user.username %>
+          </td>
+          <td align="center">
+             <% @votes = Vote.find(:all, :conditions => "post_id = '#{post.id}'")
+                @children = Post.find(:all, :conditions => "post_id = #{post.id}")
+                @children.each do |child|
+                    @postIds = child.id.to_s.concat(",")
+                end
+                @postIds = @postIds.chop
+                @reply_votes = Vote.find(:all, :conditions => "post_id in (#{@postIds})")
+                @count = @votes.size + @reply_votes.size
+             %>
+            <%= @count %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+</table>
+

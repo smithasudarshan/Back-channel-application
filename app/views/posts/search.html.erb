@@ -1,0 +1,134 @@
+<h4>Search Results for "<%= @searchFor %>"</h4>
+<% if @searchResult.size > 0 %>
+
+<%
+   postFlag = Array.new
+   maxpost = Post.find_by_sql("select max(id) as id from posts")
+   i = 1
+   puts "#{maxpost[0].attributes['id']}"
+   while i <= maxpost[0].attributes['id'] do
+    postFlag[i] = 0
+    i = i + 1
+   end
+%>
+
+<table bgcolor="#ECE5B6" border="1" bordercolor="white" width="100%">
+    <% @searchResult.each do |post| %>
+
+          <%
+
+             if post.id != post.post_id
+                @parentPost = Post.find(:first, :conditions => "id = #{post.post_id}")
+             else
+                @parentPost = post
+             end
+
+             puts "post flag = #{postFlag[@parentPost.id]}"
+             puts "parent id = #{@parentPost.id}"
+             if postFlag[@parentPost.id] == 0
+          %>
+          <tr>
+              <td>
+
+                <% @replies = Post.find(:all, :conditions => "id != #{@parentPost.id} and post_id = #{@parentPost.id}") %>
+                   <table width="100%">
+                     <tr>
+                       <td colspan="2">
+                           <%= @parentPost.post %>
+                       </td>
+                     </tr>
+                     <% @replies.each do |reply| %>
+                     <tr bgcolor="#ECD672">
+                       <td bgcolor="#ECE5B6">&nbsp;&nbsp;</td>
+                       <td>
+                         &nbsp;&nbsp;&nbsp;<%= reply.post %>
+                       <div align="right"><table align="right" border="0" > <tr align="right">
+                    <td colspan="2" valign="top" align="right">
+                      <% user = User.find_by_sql("select username from users where id = '#{reply.user_id}'") %>
+                      <b>By : <%= user[0].attributes['username'] %></b>
+                    </td>
+                  </tr><tr><td width="80%">&nbsp;</td> <td class="round" align = "right" bgcolor="#7D1B7E"><font color="white">
+                       <% @temp = Vote.find(:all, :conditions => "post_id = '#{reply.id}'")
+                            @count = @temp.size %> <b><%= @count %> <br>votes</b>
+                    </font></td></tr><tr><td colspan="2" align="right">
+                        <% if reply.user_id == session[:user_id] && reply.id == reply.post_id%>
+		                   &nbsp;|&nbsp; <%= link_to 'Edit', edit_post_path(reply)  %>
+                        <% elsif reply.user_id == session[:user_id] && !(reply.id == reply.post_id) %>
+                                <%= link_to 'Edit', edit_post_path(reply)  %>
+	                    <% end %>
+                        <% if session[:admin].to_s == "Admin" %>
+		                    &nbsp;|&nbsp;<%= link_to 'Delete', reply, confirm: 'Are you sure?', method: :delete  %>
+	                    <% end %>
+                        <% @temp = Vote.find(:all, :conditions => "post_id = '#{reply.id}' and user_id = '#{session[:user_id]}'" ) %>
+                      <% if !session[:user_id].nil? && !(reply.user_id == session[:user_id]) && !(@temp.size > 0) %>
+		                    &nbsp;|&nbsp;<%= link_to 'Vote', posts_upVote_path(:id => reply.id) %>
+                      <% end %>
+
+                      </tr></table>
+                       </div>
+                       </td>
+                     </tr>
+                     <% end %>
+                   </table>
+
+              </td>
+              <td align="right" width="20%">
+                <table>
+                  <tr align="right">
+                    <td colspan="4" valign="top" align="right">
+                      <% user = User.find_by_sql("select username from users where id = '#{@parentPost.user_id}'") %>
+                      <b>By : <%= user[0].attributes['username'] %></b>
+                    </td>
+                  </tr>
+                  <tr>
+
+                    <td colspan="4"><table width="25%" align="right"> <tr> <td class="round" align = "right" bgcolor="#7D1B7E"><font color="white">
+                       <% @temp = Vote.find(:all, :conditions => "post_id = '#{@parentPost.id}'")
+                            @count = @temp.size %> <b><%= @count %> <br>votes</b>
+                    </font></td></tr></table></td>
+                  </tr>
+
+                  <tr align="right">
+                    <td align="right">
+                      <% if @parentPost.id == @parentPost.post_id && !session[:user_id].nil? %>
+                        <%= link_to 'Reply', posts_createreply_path(:id => @parentPost.id) %>
+                      <% end %>
+                    </td>
+                    <td align="right">
+	                    <% if @parentPost.user_id == session[:user_id] && @parentPost.id == @parentPost.post_id%>
+		                   &nbsp;|&nbsp; <%= link_to 'Edit', edit_post_path(@parentPost)  %>
+                        <% elsif @parentPost.user_id == session[:user_id] && !(@parentPost.id == @parentPost.post_id) %>
+                                <%= link_to 'Edit', edit_post_path(@parentPost)  %>
+	                    <% end %>
+                    </td>
+                    <td align="right">
+	                    <% if session[:admin].to_s == "Admin" %>
+		                    &nbsp;|&nbsp;<%= link_to 'Delete', @parentPost, confirm: 'Are you sure?', method: :delete  %>
+	                    <% end %>
+                    </td>
+                    <td align="right">
+
+                      <% @temp = Vote.find(:all, :conditions => "post_id = '#{@parentPost.id}' and user_id = '#{session[:user_id]}'" ) %>
+                      <% if !session[:user_id].nil? && !(@parentPost.user_id == session[:user_id]) && !(@temp.size > 0) %>
+		                    &nbsp;|&nbsp;<%= link_to 'Vote', posts_upVote_path(:id => @parentPost.id) %>
+                      <% end %>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <% end
+
+               if postFlag[@parentPost.id] == 0
+                    postFlag[@parentPost.id] = 1
+               end
+               puts "post flag end = #{postFlag[@parentPost.id]}"
+             puts "parent id end = #{@parentPost.id}"
+
+            end
+          %>
+
+</table>
+<% else %>
+<p> No results found </p>
+<% end %>

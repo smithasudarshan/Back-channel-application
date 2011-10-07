@@ -1,0 +1,60 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+  <table cellpadding="8" cellspacing="8">
+    <tr>
+      <td>
+        <%= f.label :fullname %>
+      </td>
+      <td>
+        <%= f.text_field :fullname %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= f.label :username %>
+      </td>
+      <td>
+        <%= f.text_field :username %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= f.label :password %>
+      </td>
+      <td>
+        <%= f.password_field :password %>
+      </td>
+    </tr>
+  <%  if session[:admin].to_s == "Admin" %>
+    <tr>
+      <td>
+        <%= f.label :role %>
+      </td>
+      <td>
+        <%= f.select :role, ['Admin', 'User'] %>
+      </td>
+    </tr>
+  <% end %>
+    <tr>
+      <td colspan="2" align="right">
+        <div class="actions">
+          <%= f.submit %>
+        </div>
+      </td>
+    </tr>
+
+  </table>
+</div>
+<% end %>
