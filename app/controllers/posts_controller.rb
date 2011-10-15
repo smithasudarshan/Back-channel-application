@@ -182,15 +182,17 @@ class PostsController < ApplicationController
     else
       @users = User.find(:all, :conditions => "lower(username) like '%#{@searchFor}%' or lower(fullname) like '%#{@searchFor}%'")
 
-      @userIdList = ""
-      @users.each do |users|
-        @userIdList = @userIdList + users.id.to_s.concat(",")
-      end
+      if !@users.nil?
+	      @userIdList = ""
+	      @users.each do |users|
+		@userIdList = @userIdList + users.id.to_s.concat(",")
+	      end
 
-      @userIdList = @userIdList.chop
+	      @userIdList = @userIdList.chop
 
 
-      @searchResult = Post.find(:all, :conditions => "user_id in (#{@userIdList})")
+	      @searchResult = Post.find(:all, :conditions => "user_id in (#{@userIdList})")
+	end
     end
   end
 
