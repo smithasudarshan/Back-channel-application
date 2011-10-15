@@ -182,7 +182,7 @@ class PostsController < ApplicationController
     else
       @users = User.find(:all, :conditions => "lower(username) like '%#{@searchFor}%' or lower(fullname) like '%#{@searchFor}%'")
 
-      if !@users.nil?
+      if @users.size > 0
 	      @userIdList = ""
 	      @users.each do |users|
 		@userIdList = @userIdList + users.id.to_s.concat(",")
