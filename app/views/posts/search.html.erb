@@ -22,6 +22,7 @@
              else
                 @parentPost = post
              end
+             if !@parentPost.nil?
              if postFlag[@parentPost.id] == 0
           %>
           <tr>
@@ -122,6 +123,7 @@
                if postFlag[@parentPost.id] == 0
                     postFlag[@parentPost.id] = 1
                end
+              end
             end
           %>
 
