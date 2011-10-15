@@ -43,3 +43,7 @@ gem 'capybara'
 gem 'turn', :require => false
 end
 
+gem 'execjs'
+group :production do
+gem 'therubyracer-heroku'
+end
