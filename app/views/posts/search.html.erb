@@ -109,10 +109,11 @@
 	                    <% end %>
                     </td>
                     <td align="right">
-
+		<% if !session[:user_id].nil? %>
                       <% @temp = Vote.find(:all, :conditions => "post_id = '#{@parentPost.id}' and user_id = '#{session[:user_id]}'" ) %>
                       <% if !session[:user_id].nil? && !(@parentPost.user_id == session[:user_id]) && !(@temp.size > 0) %>
 		                    &nbsp;|&nbsp;<%= link_to 'Vote', posts_upVote_path(:id => @parentPost.id) %>
+                      <% end %>
                       <% end %>
                     </td>
                   </tr>
