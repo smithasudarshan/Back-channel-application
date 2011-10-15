@@ -179,9 +179,6 @@ class PostsController < ApplicationController
       @keywords = "%".concat(@searchFor)
       @keywords = @keywords.split(" ").join("%")
       @searchResult = Post.find(:all, :conditions => "lower(post) like '#{@keywords}%' ")
-      puts @searchResult.size
-      puts @searchResult[0].post
-      puts @searchResult[0].id
     else
       @users = User.find(:all, :conditions => "lower(username) like '%#{@searchFor}%' or lower(fullname) like '%#{@searchFor}%'")
 
@@ -194,7 +191,6 @@ class PostsController < ApplicationController
 
 
       @searchResult = Post.find(:all, :conditions => "user_id in (#{@userIdList})")
-      puts @searchResult
     end
   end
 
