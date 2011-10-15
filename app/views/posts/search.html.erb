@@ -22,9 +22,6 @@
              else
                 @parentPost = post
              end
-
-             puts "post flag = #{postFlag[@parentPost.id]}"
-             puts "parent id = #{@parentPost.id}"
              if postFlag[@parentPost.id] == 0
           %>
           <tr>
@@ -125,9 +122,6 @@
                if postFlag[@parentPost.id] == 0
                     postFlag[@parentPost.id] = 1
                end
-               puts "post flag end = #{postFlag[@parentPost.id]}"
-             puts "parent id end = #{@parentPost.id}"
-
             end
           %>
 
