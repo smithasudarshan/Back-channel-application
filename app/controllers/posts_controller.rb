@@ -194,6 +194,7 @@ class PostsController < ApplicationController
 	      @searchResult = Post.find(:all, :conditions => "user_id in (#{@userIdList})")
 	end
     end
+    return @searchResult
   end
 
   def reports
