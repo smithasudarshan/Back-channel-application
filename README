@@ -1,1 +1,22 @@
 This is the back channel application developed as a part of the course work for CSC 517.
+
+ADMIN USER
+----------
+Username = alpha
+Password = alpha
+
+NOTES
+-----
+1. The first user of the system is an administrator.
+2. When a user is deleted, all his posts are deleted too.
+
+
+TEAM
+----
+1. Kalkere Sudarshan Smitha, Unity ID - kkalker
+2. Gaurav Maheshwari, Unity ID - gmahesh
+3. Judith Job Amarnath, Unity ID -jjjobama
+
+URL
+---
+http://floating-flower-5993.heroku.com
