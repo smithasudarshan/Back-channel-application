@@ -47,11 +47,12 @@
                         <% if session[:admin].to_s == "Admin" %>
 		                    &nbsp;|&nbsp;<%= link_to 'Delete', reply, confirm: 'Are you sure?', method: :delete  %>
 	                    <% end %>
+	                    <% if !session[:user_id].nil? %>
                         <% @temp = Vote.find(:all, :conditions => "post_id = '#{reply.id}' and user_id = '#{session[:user_id]}'" ) %>
                       <% if !session[:user_id].nil? && !(reply.user_id == session[:user_id]) && !(@temp.size > 0) %>
 		                    &nbsp;|&nbsp;<%= link_to 'Vote', posts_upVote_path(:id => reply.id) %>
                       <% end %>
-
+			<% end %>
                       </tr></table>
                        </div>
                        </td>
@@ -94,10 +95,11 @@
 	                    <% end %>
                     </td>
                     <td align="right">
-
+			<% if !session[:user_id].nil? %>
                       <% @temp = Vote.find(:all, :conditions => "post_id = '#{post.id}' and user_id = '#{session[:user_id]}'" ) %>
                       <% if !session[:user_id].nil? && !(post.user_id == session[:user_id]) && !(@temp.size > 0) %>
 		                    &nbsp;|&nbsp;<%= link_to 'Vote', posts_upVote_path(:id => post.id) %>
+                      <% end %>
                       <% end %>
                     </td>
                   </tr>
