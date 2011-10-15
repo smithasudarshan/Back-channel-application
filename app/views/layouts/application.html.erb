@@ -2,6 +2,9 @@
 <html>
 <head>
   <title>Live Q&A</title>
+  <%= stylesheet_link_tag    "custom" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
 </head>
 <body>
     <div class="container">
@@ -13,6 +16,7 @@
            <table width=100% valign="top" border="0">
           <tr>
             <td align="left">
+               <%= image_tag("backchannelapp.gif", :alt => "Live Q&A", :class => "round") %>
             </td>
             <td valign="top">
               <table width="100%" cellspacing = "5" cellpadding="5">
