@@ -26,7 +26,9 @@
                   <% if !session[:user_id].nil? %>
                   <nav class="round"><%= link_to "Sign out", users_logout_path %></nav>
                   <% end %>
+                  <% if session[:user_id].nil? %>
               <nav class="round"><%= link_to "Sign in", '/users' %></nav>
+              <% end %>
                   <% if !session[:user_id].nil? %>
               <nav class="round"><%= link_to "My Profile", edit_user_path(session[:user_id]) %></nav><% end %>
               <nav class="round"><%= link_to "View Posts", '/posts' %></nav>
