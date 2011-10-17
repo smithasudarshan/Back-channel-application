@@ -25,15 +25,9 @@
           </td>
           <td align="center">
              <% @votes = Vote.find(:all, :conditions => "post_id = '#{post.id}'")
-                @children = Post.find(:all, :conditions => "post_id = #{post.id}")
-                @children.each do |child|
-                    @postIds = child.id.to_s.concat(",")
-                end
-                @postIds = @postIds.chop
-                @reply_votes = Vote.find(:all, :conditions => "post_id in (#{@postIds})")
-                @count = @votes.size + @reply_votes.size
+                
              %>
-            <%= @count %>
+            <%= @votes.size %>
           </td>
         </tr>
       <% end %>
